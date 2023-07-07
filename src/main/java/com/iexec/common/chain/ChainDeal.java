@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iexec.common.utils.BytesUtils;
 import lombok.*;
 import org.web3j.tuples.generated.Tuple6;
+import org.web3j.tuples.generated.Tuple7;
 import org.web3j.tuples.generated.Tuple9;
 
 import java.io.IOException;
@@ -57,6 +58,7 @@ public class ChainDeal {
     // config
     ChainCategory chainCategory;
     BigInteger startTime;
+    BigInteger duration;
     BigInteger botFirst;
     BigInteger botSize;
     BigInteger workerStake;
@@ -85,7 +87,7 @@ public class ChainDeal {
         }
     }
 
-    public static ChainDeal parts2ChainDeal(String chainDealId, Tuple9<String, String, BigInteger, String, String, BigInteger, String, String, BigInteger> dealPt1, Tuple6<BigInteger, byte[], String, String, String, String> dealPt2, Tuple6<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config, ChainApp app, ChainCategory category, ChainDataset dataset) {
+    public static ChainDeal parts2ChainDeal(String chainDealId, Tuple9<String, String, BigInteger, String, String, BigInteger, String, String, BigInteger> dealPt1, Tuple6<BigInteger, byte[], String, String, String, String> dealPt2, Tuple7<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config, ChainApp app, ChainCategory category, ChainDataset dataset) {
         if (dealPt1 == null || dealPt2 == null || config == null || app == null || category == null) {
             return new ChainDeal();
         }
@@ -108,10 +110,11 @@ public class ChainDeal {
                 .params(stringToDealParams(dealPt2.component6()))
                 .chainCategory(category)
                 .startTime(config.component2())
-                .botFirst(config.component3())
-                .botSize(config.component4())
-                .workerStake(config.component5())
-                .schedulerRewardRatio(config.component6())
+                .duration(config.component3())
+                .botFirst(config.component4())
+                .botSize(config.component5())
+                .workerStake(config.component6())
+                .schedulerRewardRatio(config.component7())
                 .build();
     }
 }

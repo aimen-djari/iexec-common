@@ -37,6 +37,7 @@ import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tuples.generated.Tuple6;
+import org.web3j.tuples.generated.Tuple7;
 import org.web3j.tuples.generated.Tuple9;
 import org.web3j.tx.ChainIdLong;
 import org.web3j.tx.RawTransactionManager;
@@ -846,7 +847,7 @@ public abstract class IexecHubAbstractService {
                     iexecHub.viewDealABILegacy_pt1(chainDealIdBytes).send();
             Tuple6<BigInteger, byte[], String, String, String, String> dealPt2 =
                     iexecHub.viewDealABILegacy_pt2(chainDealIdBytes).send();
-            Tuple6<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config =
+            Tuple7<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config =
                     iexecHub.viewConfigABILegacy(chainDealIdBytes).send();
 
 
@@ -965,12 +966,14 @@ public abstract class IexecHubAbstractService {
                     category.component2(),
                     category.component3()
             );
-            if (chainCategory.getMaxExecutionTime() <= 0) {
+            
+            if (chainCategory.getId() != 5 && chainCategory.getMaxExecutionTime() <= 0) {
                 log.error("Category max execution time should be greater than zero " +
                         "(likely a blockchain issue) [categoryId:{}, maxExecutionTime:{}]",
                         id, chainCategory.getMaxExecutionTime());
                 return Optional.empty();
             }
+            
             return Optional.of(chainCategory);
         } catch (Exception e) {
             log.error("Failed to get ChainCategory [id:{}]", id, e);

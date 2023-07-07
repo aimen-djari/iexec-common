@@ -16,16 +16,18 @@
 
 package com.iexec.common.chain;
 
-import com.iexec.common.utils.BytesUtils;
-import org.junit.jupiter.api.Test;
-import org.web3j.tuples.generated.Tuple6;
-import org.web3j.tuples.generated.Tuple9;
-
-import java.math.BigInteger;
-
 import static com.iexec.common.chain.ChainDeal.stringToDealParams;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+
+import java.math.BigInteger;
+
+import org.junit.jupiter.api.Test;
+import org.web3j.tuples.generated.Tuple6;
+import org.web3j.tuples.generated.Tuple7;
+import org.web3j.tuples.generated.Tuple9;
+
+import com.iexec.common.utils.BytesUtils;
 
 class ChainDealTest {
 
@@ -48,14 +50,15 @@ class ChainDealTest {
                     "4",
                     "5",
                     "6");
-    public static final Tuple6<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger>
+    public static final Tuple7<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger>
             CONFIG =
-            new Tuple6<>(BigInteger.valueOf(1),
+            new Tuple7<>(BigInteger.valueOf(1),
                     BigInteger.valueOf(2),
                     BigInteger.valueOf(3),
                     BigInteger.valueOf(4),
                     BigInteger.valueOf(5),
-                    BigInteger.valueOf(6));
+                    BigInteger.valueOf(6),
+                    BigInteger.valueOf(7));
     public static final String CHAIN_DEAL_ID = "chainDeal";
     private static final String ARGS = "argument for the worker";
     private static final String FILE1 = "http://test.com/image1.png";
@@ -116,7 +119,7 @@ class ChainDealTest {
 
     @Test
     void shouldConvertToChainDeal() {
-        Tuple6<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config =
+        Tuple7<BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> config =
                 CONFIG;
         ChainApp app = mock(ChainApp.class);
         ChainCategory category = mock(ChainCategory.class);
@@ -144,10 +147,11 @@ class ChainDealTest {
                         .params(stringToDealParams(DEAL_PT_2.component6()))
                         .chainCategory(category)
                         .startTime(config.component2())
-                        .botFirst(config.component3())
-                        .botSize(config.component4())
-                        .workerStake(config.component5())
-                        .schedulerRewardRatio(config.component6())
+                        .duration(config.component3())
+                        .botFirst(config.component4())
+                        .botSize(config.component5())
+                        .workerStake(config.component6())
+                        .schedulerRewardRatio(config.component7())
                         .build()
         );
     }

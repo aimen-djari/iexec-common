@@ -23,7 +23,8 @@ public enum ChainTaskStatus implements ChainStatus {
     ACTIVE,    // Marketed to constributions are open
     REVEALING, // Starting consensus reveal
     COMPLETED, // Concensus achieved
-    FAILLED;    // Failed consensus
+    FAILLED,    // Failed consensus
+    INTERRUPTED;    // Interrupted task
 
     public static ChainTaskStatus getValue(int i) {
         return ChainTaskStatus.values()[i];

@@ -66,7 +66,7 @@ public class DockerClientInstanceTests {
     private static final List<String> ENV = List.of("FOO=bar");
     private final static String DOCKERHUB_USERNAME_ENV_NAME = "DOCKER_IO_USER";
     private final static String DOCKERHUB_PASSWORD_ENV_NAME = "DOCKER_IO_PASSWORD";
-    private final static String PRIVATE_IMAGE_NAME = "iexechub/private-image:alpine-3.13";
+    private final static String PRIVATE_IMAGE_NAME = "iexechub/iexec-core:6.0.0";
     private final static String DOCKER_NETWORK = "dockerTestsNetwork";
     private static final String DEVICE_PATH_IN_CONTAINER = "/dev/some-device-in-container";
     private static final String DEVICE_PATH_ON_HOST = "/dev/some-device-on-host";

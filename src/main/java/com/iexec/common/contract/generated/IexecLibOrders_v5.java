@@ -139,6 +139,13 @@ public class IexecLibOrders_v5 extends Contract {
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
+    public RemoteFunctionCall<byte[]> hash(RequestOrderOperation _requestorderoperation) {
+        final Function function = new Function(FUNC_hash, 
+                Arrays.<Type>asList(_requestorderoperation), 
+                Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
+        return executeRemoteCallSingleValueReturn(function, byte[].class);
+    }
+
     public RemoteFunctionCall<byte[]> hash(DatasetOrderOperation _datasetorderoperation) {
         final Function function = new Function(FUNC_hash, 
                 Arrays.<Type>asList(_datasetorderoperation), 
@@ -207,7 +214,6 @@ public class IexecLibOrders_v5 extends Contract {
     }
 
     public static class DatasetOrder extends DynamicStruct {
-
         public String dataset;
 
         public BigInteger datasetprice;
@@ -253,10 +259,94 @@ public class IexecLibOrders_v5 extends Contract {
         }
     }
 
+    public static class RequestOrder extends DynamicStruct {
+        public String app;
+
+        public BigInteger appmaxprice;
+
+        public String dataset;
+
+        public BigInteger datasetmaxprice;
+
+        public String workerpool;
+
+        public BigInteger workerpoolmaxprice;
+
+        public BigInteger taskmaxprice;
+
+        public BigInteger taskduration;
+
+        public String requester;
+
+        public BigInteger volume;
+
+        public byte[] tag;
+
+        public BigInteger category;
+
+        public BigInteger trust;
+
+        public String beneficiary;
+
+        public String callback;
+
+        public String params;
+
+        public byte[] salt;
+
+        public byte[] sign;
+
+        public RequestOrder(String app, BigInteger appmaxprice, String dataset, BigInteger datasetmaxprice, String workerpool, BigInteger workerpoolmaxprice, BigInteger taskmaxprice, BigInteger taskduration, String requester, BigInteger volume, byte[] tag, BigInteger category, BigInteger trust, String beneficiary, String callback, String params, byte[] salt, byte[] sign) {
+            super(new org.web3j.abi.datatypes.Address(app),new org.web3j.abi.datatypes.generated.Uint256(appmaxprice),new org.web3j.abi.datatypes.Address(dataset),new org.web3j.abi.datatypes.generated.Uint256(datasetmaxprice),new org.web3j.abi.datatypes.Address(workerpool),new org.web3j.abi.datatypes.generated.Uint256(workerpoolmaxprice),new org.web3j.abi.datatypes.generated.Uint256(taskmaxprice),new org.web3j.abi.datatypes.generated.Uint256(taskduration),new org.web3j.abi.datatypes.Address(requester),new org.web3j.abi.datatypes.generated.Uint256(volume),new org.web3j.abi.datatypes.generated.Bytes32(tag),new org.web3j.abi.datatypes.generated.Uint256(category),new org.web3j.abi.datatypes.generated.Uint256(trust),new org.web3j.abi.datatypes.Address(beneficiary),new org.web3j.abi.datatypes.Address(callback),new org.web3j.abi.datatypes.Utf8String(params),new org.web3j.abi.datatypes.generated.Bytes32(salt),new org.web3j.abi.datatypes.DynamicBytes(sign));
+            this.app = app;
+            this.appmaxprice = appmaxprice;
+            this.dataset = dataset;
+            this.datasetmaxprice = datasetmaxprice;
+            this.workerpool = workerpool;
+            this.workerpoolmaxprice = workerpoolmaxprice;
+            this.taskmaxprice = taskmaxprice;
+            this.taskduration = taskduration;
+            this.requester = requester;
+            this.volume = volume;
+            this.tag = tag;
+            this.category = category;
+            this.trust = trust;
+            this.beneficiary = beneficiary;
+            this.callback = callback;
+            this.params = params;
+            this.salt = salt;
+            this.sign = sign;
+        }
+
+        public RequestOrder(Address app, Uint256 appmaxprice, Address dataset, Uint256 datasetmaxprice, Address workerpool, Uint256 workerpoolmaxprice, Uint256 taskmaxprice, Uint256 taskduration, Address requester, Uint256 volume, Bytes32 tag, Uint256 category, Uint256 trust, Address beneficiary, Address callback, Utf8String params, Bytes32 salt, DynamicBytes sign) {
+            super(app,appmaxprice,dataset,datasetmaxprice,workerpool,workerpoolmaxprice,taskmaxprice,taskduration,requester,volume,tag,category,trust,beneficiary,callback,params,salt,sign);
+            this.app = app.getValue();
+            this.appmaxprice = appmaxprice.getValue();
+            this.dataset = dataset.getValue();
+            this.datasetmaxprice = datasetmaxprice.getValue();
+            this.workerpool = workerpool.getValue();
+            this.workerpoolmaxprice = workerpoolmaxprice.getValue();
+            this.taskmaxprice = taskmaxprice.getValue();
+            this.taskduration = taskduration.getValue();
+            this.requester = requester.getValue();
+            this.volume = volume.getValue();
+            this.tag = tag.getValue();
+            this.category = category.getValue();
+            this.trust = trust.getValue();
+            this.beneficiary = beneficiary.getValue();
+            this.callback = callback.getValue();
+            this.params = params.getValue();
+            this.salt = salt.getValue();
+            this.sign = sign.getValue();
+        }
+    }
+
     public static class WorkerpoolOrder extends DynamicStruct {
         public String workerpool;
 
         public BigInteger workerpoolprice;
+
+        public String hardware;
 
         public BigInteger volume;
 
@@ -276,10 +366,11 @@ public class IexecLibOrders_v5 extends Contract {
 
         public byte[] sign;
 
-        public WorkerpoolOrder(String workerpool, BigInteger workerpoolprice, BigInteger volume, byte[] tag, BigInteger category, BigInteger trust, String apprestrict, String datasetrestrict, String requesterrestrict, byte[] salt, byte[] sign) {
-            super(new org.web3j.abi.datatypes.Address(workerpool),new org.web3j.abi.datatypes.generated.Uint256(workerpoolprice),new org.web3j.abi.datatypes.generated.Uint256(volume),new org.web3j.abi.datatypes.generated.Bytes32(tag),new org.web3j.abi.datatypes.generated.Uint256(category),new org.web3j.abi.datatypes.generated.Uint256(trust),new org.web3j.abi.datatypes.Address(apprestrict),new org.web3j.abi.datatypes.Address(datasetrestrict),new org.web3j.abi.datatypes.Address(requesterrestrict),new org.web3j.abi.datatypes.generated.Bytes32(salt),new org.web3j.abi.datatypes.DynamicBytes(sign));
+        public WorkerpoolOrder(String workerpool, BigInteger workerpoolprice, String hardware, BigInteger volume, byte[] tag, BigInteger category, BigInteger trust, String apprestrict, String datasetrestrict, String requesterrestrict, byte[] salt, byte[] sign) {
+            super(new org.web3j.abi.datatypes.Address(workerpool),new org.web3j.abi.datatypes.generated.Uint256(workerpoolprice),new org.web3j.abi.datatypes.Utf8String(hardware),new org.web3j.abi.datatypes.generated.Uint256(volume),new org.web3j.abi.datatypes.generated.Bytes32(tag),new org.web3j.abi.datatypes.generated.Uint256(category),new org.web3j.abi.datatypes.generated.Uint256(trust),new org.web3j.abi.datatypes.Address(apprestrict),new org.web3j.abi.datatypes.Address(datasetrestrict),new org.web3j.abi.datatypes.Address(requesterrestrict),new org.web3j.abi.datatypes.generated.Bytes32(salt),new org.web3j.abi.datatypes.DynamicBytes(sign));
             this.workerpool = workerpool;
             this.workerpoolprice = workerpoolprice;
+            this.hardware = hardware;
             this.volume = volume;
             this.tag = tag;
             this.category = category;
@@ -291,10 +382,11 @@ public class IexecLibOrders_v5 extends Contract {
             this.sign = sign;
         }
 
-        public WorkerpoolOrder(Address workerpool, Uint256 workerpoolprice, Uint256 volume, Bytes32 tag, Uint256 category, Uint256 trust, Address apprestrict, Address datasetrestrict, Address requesterrestrict, Bytes32 salt, DynamicBytes sign) {
-            super(workerpool,workerpoolprice,volume,tag,category,trust,apprestrict,datasetrestrict,requesterrestrict,salt,sign);
+        public WorkerpoolOrder(Address workerpool, Uint256 workerpoolprice, Utf8String hardware, Uint256 volume, Bytes32 tag, Uint256 category, Uint256 trust, Address apprestrict, Address datasetrestrict, Address requesterrestrict, Bytes32 salt, DynamicBytes sign) {
+            super(workerpool,workerpoolprice,hardware,volume,tag,category,trust,apprestrict,datasetrestrict,requesterrestrict,salt,sign);
             this.workerpool = workerpool.getValue();
             this.workerpoolprice = workerpoolprice.getValue();
+            this.hardware = hardware.getValue();
             this.volume = volume.getValue();
             this.tag = tag.getValue();
             this.category = category.getValue();
@@ -379,76 +471,20 @@ public class IexecLibOrders_v5 extends Contract {
         }
     }
 
-    public static class RequestOrder extends DynamicStruct {
-        public String app;
-
-        public BigInteger appmaxprice;
-
-        public String dataset;
-
-        public BigInteger datasetmaxprice;
-
-        public String workerpool;
-
-        public BigInteger workerpoolmaxprice;
-
-        public String requester;
-
-        public BigInteger volume;
-
-        public byte[] tag;
-
-        public BigInteger category;
-
-        public BigInteger trust;
-
-        public String beneficiary;
-
-        public String callback;
-
-        public String params;
-
-        public byte[] salt;
+    public static class RequestOrderOperation extends DynamicStruct {
+        public RequestOrder order;
 
         public byte[] sign;
 
-        public RequestOrder(String app, BigInteger appmaxprice, String dataset, BigInteger datasetmaxprice, String workerpool, BigInteger workerpoolmaxprice, String requester, BigInteger volume, byte[] tag, BigInteger category, BigInteger trust, String beneficiary, String callback, String params, byte[] salt, byte[] sign) {
-            super(new org.web3j.abi.datatypes.Address(app),new org.web3j.abi.datatypes.generated.Uint256(appmaxprice),new org.web3j.abi.datatypes.Address(dataset),new org.web3j.abi.datatypes.generated.Uint256(datasetmaxprice),new org.web3j.abi.datatypes.Address(workerpool),new org.web3j.abi.datatypes.generated.Uint256(workerpoolmaxprice),new org.web3j.abi.datatypes.Address(requester),new org.web3j.abi.datatypes.generated.Uint256(volume),new org.web3j.abi.datatypes.generated.Bytes32(tag),new org.web3j.abi.datatypes.generated.Uint256(category),new org.web3j.abi.datatypes.generated.Uint256(trust),new org.web3j.abi.datatypes.Address(beneficiary),new org.web3j.abi.datatypes.Address(callback),new org.web3j.abi.datatypes.Utf8String(params),new org.web3j.abi.datatypes.generated.Bytes32(salt),new org.web3j.abi.datatypes.DynamicBytes(sign));
-            this.app = app;
-            this.appmaxprice = appmaxprice;
-            this.dataset = dataset;
-            this.datasetmaxprice = datasetmaxprice;
-            this.workerpool = workerpool;
-            this.workerpoolmaxprice = workerpoolmaxprice;
-            this.requester = requester;
-            this.volume = volume;
-            this.tag = tag;
-            this.category = category;
-            this.trust = trust;
-            this.beneficiary = beneficiary;
-            this.callback = callback;
-            this.params = params;
-            this.salt = salt;
+        public RequestOrderOperation(RequestOrder order, byte[] sign) {
+            super(order,new org.web3j.abi.datatypes.DynamicBytes(sign));
+            this.order = order;
             this.sign = sign;
         }
 
-        public RequestOrder(Address app, Uint256 appmaxprice, Address dataset, Uint256 datasetmaxprice, Address workerpool, Uint256 workerpoolmaxprice, Address requester, Uint256 volume, Bytes32 tag, Uint256 category, Uint256 trust, Address beneficiary, Address callback, Utf8String params, Bytes32 salt, DynamicBytes sign) {
-            super(app,appmaxprice,dataset,datasetmaxprice,workerpool,workerpoolmaxprice,requester,volume,tag,category,trust,beneficiary,callback,params,salt,sign);
-            this.app = app.getValue();
-            this.appmaxprice = appmaxprice.getValue();
-            this.dataset = dataset.getValue();
-            this.datasetmaxprice = datasetmaxprice.getValue();
-            this.workerpool = workerpool.getValue();
-            this.workerpoolmaxprice = workerpoolmaxprice.getValue();
-            this.requester = requester.getValue();
-            this.volume = volume.getValue();
-            this.tag = tag.getValue();
-            this.category = category.getValue();
-            this.trust = trust.getValue();
-            this.beneficiary = beneficiary.getValue();
-            this.callback = callback.getValue();
-            this.params = params.getValue();
-            this.salt = salt.getValue();
+        public RequestOrderOperation(RequestOrder order, DynamicBytes sign) {
+            super(order,sign);
+            this.order = order;
             this.sign = sign.getValue();
         }
     }
