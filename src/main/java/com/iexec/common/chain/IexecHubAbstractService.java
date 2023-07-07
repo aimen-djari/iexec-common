@@ -966,14 +966,12 @@ public abstract class IexecHubAbstractService {
                     category.component2(),
                     category.component3()
             );
-            
-            if (chainCategory.getId() != 5 && chainCategory.getMaxExecutionTime() <= 0) {
+            if (chainCategory.getMaxExecutionTime() <= 0) {
                 log.error("Category max execution time should be greater than zero " +
                         "(likely a blockchain issue) [categoryId:{}, maxExecutionTime:{}]",
                         id, chainCategory.getMaxExecutionTime());
                 return Optional.empty();
             }
-            
             return Optional.of(chainCategory);
         } catch (Exception e) {
             log.error("Failed to get ChainCategory [id:{}]", id, e);
