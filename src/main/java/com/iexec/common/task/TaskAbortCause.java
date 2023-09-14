@@ -21,4 +21,5 @@ public enum TaskAbortCause {
     UNKNOWN,
     CONTRIBUTION_TIMEOUT,
     CONSENSUS_REACHED,
+    INTERRUPTED,
 }
