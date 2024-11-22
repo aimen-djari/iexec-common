@@ -37,10 +37,16 @@ public class IexecEnvUtils {
     public static final String IEXEC_IN = "IEXEC_IN";
     public static final String IEXEC_OUT = "IEXEC_OUT";
     // dataset
+    public static final String IEXEC_DATASET_NUMBER = "IEXEC_DATASET_NUMBER";
     public static final String IEXEC_DATASET_ADDRESS = "IEXEC_DATASET_ADDRESS";
     public static final String IEXEC_DATASET_URL = "IEXEC_DATASET_URL";
     public static final String IEXEC_DATASET_FILENAME = "IEXEC_DATASET_FILENAME";
     public static final String IEXEC_DATASET_CHECKSUM = "IEXEC_DATASET_CHECKSUM";
+    
+    public static final String IEXEC_DATASET_ADDRESS_PREFIX = "IEXEC_DATASET_ADDRESS_";
+    public static final String IEXEC_DATASET_URL_PREFIX = "IEXEC_DATASET_URL_";
+    public static final String IEXEC_DATASET_FILENAME_PREFIX = "IEXEC_DATASET_FILENAME_";
+    public static final String IEXEC_DATASET_CHECKSUM_PREFIX = "IEXEC_DATASET_CHECKSUM_";
     // BoT
     public static final String IEXEC_BOT_TASK_INDEX = "IEXEC_BOT_TASK_INDEX";
     public static final String IEXEC_BOT_SIZE = "IEXEC_BOT_SIZE";
@@ -69,8 +75,21 @@ public class IexecEnvUtils {
     public static Map<String, String> getAllIexecEnv(TaskDescription taskDescription) {
         Map<String, String> envMap = new HashMap<>();
         envMap.putAll(getComputeStageEnvMap(taskDescription));
-        envMap.put(IEXEC_DATASET_URL, taskDescription.getDatasetUri());
-        envMap.put(IEXEC_DATASET_CHECKSUM, taskDescription.getDatasetChecksum());
+        if(taskDescription.getDatasetUris() != null && taskDescription.getDatasetChecksums() != null
+        		&& !taskDescription.getDatasetUris().isEmpty() && !taskDescription.getDatasetChecksums().isEmpty()) {
+            for (int i = 1; i <= taskDescription.getDatasetUris().size(); i++) {
+                envMap.put(IEXEC_DATASET_URL_PREFIX + i, taskDescription.getDatasetUris().get(i-1));
+                envMap.put(IEXEC_DATASET_CHECKSUM_PREFIX + i, taskDescription.getDatasetChecksums().get(i-1));
+            }
+            envMap.put(IEXEC_DATASET_URL, taskDescription.getDatasetUris().get(0));
+            envMap.put(IEXEC_DATASET_CHECKSUM, taskDescription.getDatasetChecksums().get(0));
+        } else {
+        	envMap.put(IEXEC_DATASET_URL, "");
+        	envMap.put(IEXEC_DATASET_CHECKSUM, "");
+        	envMap.put(IEXEC_DATASET_URL_PREFIX + "1", "");
+            envMap.put(IEXEC_DATASET_CHECKSUM_PREFIX + "1", "");
+        }
+        
         if (taskDescription.getInputFiles() == null) {
             return envMap;
         }
@@ -95,9 +114,24 @@ public class IexecEnvUtils {
         map.put(IEXEC_TASK_ID, taskDescription.getChainTaskId());
         map.put(IEXEC_IN, IexecFileHelper.SLASH_IEXEC_IN);
         map.put(IEXEC_OUT, IexecFileHelper.SLASH_IEXEC_OUT);
-        // dataset
-        map.put(IEXEC_DATASET_ADDRESS, taskDescription.getDatasetAddress());
-        map.put(IEXEC_DATASET_FILENAME, taskDescription.getDatasetAddress());
+        
+        if(taskDescription.getDatasetAddresses() != null && taskDescription.getDatasetNames() != null 
+        		&& !taskDescription.getDatasetAddresses().isEmpty() && !taskDescription.getDatasetNames().isEmpty()) {
+        	for (int i = 1; i <= taskDescription.getDatasetAddresses().size(); i++) {
+            	map.put(IEXEC_DATASET_ADDRESS_PREFIX + i, taskDescription.getDatasetAddresses().get(i-1));
+            	map.put(IEXEC_DATASET_FILENAME_PREFIX + i, taskDescription.getDatasetAddresses().get(i-1));
+            }
+        	map.put(IEXEC_DATASET_ADDRESS, taskDescription.getDatasetAddresses().get(0));
+        	map.put(IEXEC_DATASET_FILENAME, taskDescription.getDatasetAddresses().get(0));
+            map.put(IEXEC_DATASET_NUMBER, String.valueOf(taskDescription.getDatasetAddresses().size()));
+        } else {
+        	map.put(IEXEC_DATASET_ADDRESS, "");
+        	map.put(IEXEC_DATASET_FILENAME, "");
+        	map.put(IEXEC_DATASET_ADDRESS_PREFIX + "1", "");
+        	map.put(IEXEC_DATASET_FILENAME_PREFIX + "1", "");
+        	map.put(IEXEC_DATASET_NUMBER, String.valueOf(0));
+        }
+       
         // BoT
         map.put(IEXEC_BOT_SIZE, String.valueOf(taskDescription.getBotSize()));
         map.put(IEXEC_BOT_FIRST_INDEX, String.valueOf(taskDescription.getBotFirstIndex()));

@@ -38,17 +38,17 @@ class IexecEnvUtilsTest {
     void getAllIexecEnv() {
         TaskDescription taskDescription = TaskDescription.builder()
                 .chainTaskId(CHAIN_TASK_ID)
-                .datasetAddress(DATASET_ADDRESS)
-                .datasetUri(DATASET_URL)
-                .datasetChecksum(DATASET_CHECKSUM)
-                .datasetName(DATASET_NAME)
+                .datasetAddresses(List.of(DATASET_ADDRESS))
+                .datasetUris(List.of(DATASET_URL))
+                .datasetChecksums(List.of(DATASET_CHECKSUM))
+                .datasetNames(List.of(DATASET_NAME))
                 .botSize(1)
                 .botFirstIndex(0)
                 .inputFiles(Collections.singletonList(INPUT_FILE_1))
                 .build();
         Map<String, String> map = IexecEnvUtils.getAllIexecEnv(taskDescription);
-        Assertions.assertEquals(DATASET_URL, map.get("IEXEC_DATASET_URL"));
-        Assertions.assertEquals(DATASET_CHECKSUM, map.get("IEXEC_DATASET_CHECKSUM"));
+        Assertions.assertEquals(DATASET_URL, map.get("IEXEC_DATASET_URL_1"));
+        Assertions.assertEquals(DATASET_CHECKSUM, map.get("IEXEC_DATASET_CHECKSUM_1"));
         Assertions.assertEquals(INPUT_FILE_1, map.get("IEXEC_INPUT_FILE_URL_1"));
         checkComputeStageMap(map, taskDescription);
     }
@@ -57,8 +57,8 @@ class IexecEnvUtilsTest {
     void getComputeStageEnvMap() {
         TaskDescription taskDescription = TaskDescription.builder()
                 .chainTaskId(CHAIN_TASK_ID)
-                .datasetAddress(DATASET_ADDRESS)
-                .datasetName(DATASET_NAME)
+                .datasetAddresses(List.of(DATASET_ADDRESS))
+                .datasetNames(List.of(DATASET_NAME))
                 .botSize(1)
                 .botFirstIndex(0)
                 .inputFiles(Collections.singletonList(INPUT_FILE_1))
@@ -72,8 +72,8 @@ class IexecEnvUtilsTest {
     void getComputeStageEnvList() {
         TaskDescription taskDescription = TaskDescription.builder()
                 .chainTaskId(CHAIN_TASK_ID)
-                .datasetName(DATASET_NAME)
-                .datasetAddress(DATASET_ADDRESS)
+                .datasetAddresses(List.of(DATASET_ADDRESS))
+                .datasetNames(List.of(DATASET_NAME))
                 .botSize(1)
                 .botFirstIndex(0)
                 .inputFiles(Collections.singletonList(INPUT_FILE_1))
@@ -82,8 +82,9 @@ class IexecEnvUtilsTest {
                 .asList("IEXEC_TASK_ID=chainTaskId",
                         "IEXEC_IN=/iexec_in",
                         "IEXEC_OUT=/iexec_out",
-                        "IEXEC_DATASET_ADDRESS=datasetAddress",
-                        "IEXEC_DATASET_FILENAME=datasetAddress",
+                        "IEXEC_DATASET_ADDRESS_1=datasetAddress",
+                        "IEXEC_DATASET_FILENAME_1=datasetAddress",
+                        "IEXEC_DATASET_NUMBER=1",
                         "IEXEC_INPUT_FILES_FOLDER=/iexec_in",
                         "IEXEC_BOT_SIZE=1",
                         "IEXEC_BOT_FIRST_INDEX=0",
@@ -103,10 +104,12 @@ class IexecEnvUtilsTest {
                 map.get("IEXEC_IN"));
         Assertions.assertEquals(IexecFileHelper.SLASH_IEXEC_OUT,
                 map.get("IEXEC_OUT"));
-        Assertions.assertEquals(taskDescription.getDatasetAddress(),
-                map.get("IEXEC_DATASET_ADDRESS"));
-        Assertions.assertEquals(taskDescription.getDatasetAddress(),
-                map.get("IEXEC_DATASET_FILENAME"));
+        Assertions.assertEquals("1",
+                map.get("IEXEC_DATASET_NUMBER"));
+        Assertions.assertEquals(taskDescription.getDatasetAddresses().get(0),
+                map.get("IEXEC_DATASET_ADDRESS_1"));
+        Assertions.assertEquals(taskDescription.getDatasetAddresses().get(0),
+                map.get("IEXEC_DATASET_FILENAME_1"));
         Assertions.assertEquals(String.valueOf(taskDescription.getBotSize()),
                 map.get("IEXEC_BOT_SIZE"));
         Assertions.assertEquals(String.valueOf(taskDescription.getBotFirstIndex()),
