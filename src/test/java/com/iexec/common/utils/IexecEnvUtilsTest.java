@@ -84,12 +84,14 @@ class IexecEnvUtilsTest {
                         "IEXEC_OUT=/iexec_out",
                         "IEXEC_DATASET_ADDRESS_1=datasetAddress",
                         "IEXEC_DATASET_FILENAME_1=datasetAddress",
+                        "IEXEC_DATASET_ADDRESS=datasetAddress",
+                        "IEXEC_DATASET_FILENAME=datasetAddress",
                         "IEXEC_DATASET_NUMBER=1",
-                        "IEXEC_INPUT_FILES_FOLDER=/iexec_in",
                         "IEXEC_BOT_SIZE=1",
                         "IEXEC_BOT_FIRST_INDEX=0",
                         "IEXEC_BOT_TASK_INDEX=0",
                         "IEXEC_INPUT_FILES_NUMBER=1",
+                        "IEXEC_INPUT_FILES_FOLDER=/iexec_in",
                         "IEXEC_INPUT_FILE_NAME_1=filename");
         List<String> actual = IexecEnvUtils.getComputeStageEnvList(taskDescription);
         Collections.sort(expected);
